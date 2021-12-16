@@ -44,9 +44,13 @@ def is_solved(mask):
 def check_boards(boards, nums):
     
     mask = [[[0 for i in range(5)] for j in range(5)] for k in range(len(boards))]
+    winners = [0 for i in range(len(boards))]
 
     for i in range(len(nums)):
         for j in range(len(boards)):
+
+            if (winners[j] == 1):
+                continue
 
             for k in range(5):
                 for l in range(5):
@@ -54,7 +58,10 @@ def check_boards(boards, nums):
                         mask[j][k][l] = 1
 
                     if (is_solved(mask[j])):
-                        return j, mask[j], nums[i]
+                        winners[j] = 1
+                        if (0 not in winners):
+                            return j, mask[j], nums[i]
+                        
 
 # Score the first winning board
 def score_board(board, mask, val):
